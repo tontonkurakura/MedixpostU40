@@ -1,0 +1,16 @@
+# config.yml
+timezone: "Asia/Tokyo"   # 省略時は UTC として解釈
+window_minutes: 5        # 実行ウィンドウ（通常5分でOK）
+
+jobs:
+  - name: "隔月リマインド（奇数月1日 09:00）"
+    channel: "C08FF9LL281"         # SlackのチャンネルID
+    text: "次回のミーティング準備をお願いします"
+    cron: "0 9 1 */2 *"          # 分 時 日 月 曜日（Asia/Tokyo基準で解釈）
+
+  # - name: "毎月のアナウンス（毎月15日 18:00）"
+  #   channel: "C09XYZ999"
+  #   text: "月例アナウンスです。各自レポート更新をお願いします。"
+  #   cron: "0 18 15 * *"
+
+  # 必要なだけ増やせます

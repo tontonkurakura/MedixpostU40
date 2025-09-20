@@ -1,0 +1,29 @@
+name: Slack Scheduler
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"  # 5分おき（UTC）。config.yml の timezone で評価するのでUTCでOK
+  workflow_dispatch: {}     # 手動実行も可
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml croniter
+
+      - name: Run scheduler
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        run: |
+          python .github/scripts/post_slack.py
